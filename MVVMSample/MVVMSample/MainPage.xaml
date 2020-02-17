@@ -2,13 +2,28 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MVVMSample"
+             xmlns:viewModel="clr-namespace:MVVMSample.ViewModel"
              x:Class="MVVMSample.MainPage">
-
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+    <ContentPage.BindingContext>
+        <viewModel:MainPageViewModel/>
+    </ContentPage.BindingContext>
+    <StackLayout Style="{StaticResource PageLayout}">
+        <Grid VerticalOptions="StartAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Entry Grid.Row="0" Text="{Binding TodoItem}"/>
+            <StackLayout Grid.Row="1" Style="{StaticResource LinhaGridColuna}">
+                <StackLayout Style="{StaticResource ColunaGridLayout}">
+                    <Button Text="Salvar" Command="{Binding SaveTodoItemCommand}" Style="{StaticResource SaveButton}"/>
+                </StackLayout>
+                <StackLayout Style="{StaticResource ColunaGridLayout}">
+                    <Button Text="Apagar" Command="{Binding DeleteTodoItemCommand}" Style="{StaticResource DeleteButton}"/>
+                </StackLayout>
+            </StackLayout>
+            <ListView ItemsSource="{Binding AllTodoItems}" Grid.Row="2" HasUnevenRows="True"/>
+        </Grid>
     </StackLayout>
-
 </ContentPage>
